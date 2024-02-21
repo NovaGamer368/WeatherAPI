@@ -21,7 +21,9 @@ class MyApp extends StatelessWidget {
           secondary: Colors.white,
         ),
       ),
-      home: const MyHomePage(title: "Weather Dating App"),
+      home: const MyHomePage(
+        title: 'Weather Dating App',
+      ),
     );
   }
 }
@@ -36,6 +38,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool? isChecked = false;
+  int _navIndex = 1;
   Container buildProfileCard(String profileType) {
     return Container(
         width: 100,
@@ -50,7 +54,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     List weatherOptions = ["Snowy", "Raining", "Cloudy"];
-    bool isChecked = false;
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -73,11 +76,75 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         bottomNavigationBar: BottomNavigationBar(
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.favorite), label: "Likes"),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite),
+              label: "Likes",
+            ),
             BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
           ],
-          currentIndex: 1,
+          currentIndex: _navIndex,
+          onTap: (value) => {
+            setState(() {
+              _navIndex = value;
+              switch (_navIndex) {
+                case 2:
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Profile()));
+                  break;
+              }
+            })
+          },
+        ));
+  }
+}
+
+class Profile extends StatefulWidget {
+  const Profile({super.key});
+
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  int _navIndex = 2;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: const Text("Profile Page"),
+          // actions: [
+          //   BackButton(
+          //     onPressed: () => {Navigator.pop(context)},
+          //   )
+          // ],
+        ),
+        body: const Center(),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite),
+              label: "Likes",
+            ),
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+          ],
+          currentIndex: _navIndex,
+          onTap: (value) => {
+            setState(() {
+              _navIndex = value;
+              switch (_navIndex) {
+                case 1:
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const MyHomePage(title: "Weather Dating App")));
+                  break;
+              }
+            })
+          },
         ));
   }
 }
