@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './profile.dart';
 
 void main() {
   runApp(const MyApp());
@@ -89,58 +90,12 @@ class _MyHomePageState extends State<MyHomePage> {
               _navIndex = value;
               switch (_navIndex) {
                 case 2:
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Profile()));
-                  break;
-              }
-            })
-          },
-        ));
-  }
-}
-
-class Profile extends StatefulWidget {
-  const Profile({super.key});
-
-  @override
-  State<Profile> createState() => _ProfileState();
-}
-
-class _ProfileState extends State<Profile> {
-  int _navIndex = 2;
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: const Text("Profile Page"),
-          // actions: [
-          //   BackButton(
-          //     onPressed: () => {Navigator.pop(context)},
-          //   )
-          // ],
-        ),
-        body: const Center(),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.favorite),
-              label: "Likes",
-            ),
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
-          ],
-          currentIndex: _navIndex,
-          onTap: (value) => {
-            setState(() {
-              _navIndex = value;
-              switch (_navIndex) {
-                case 1:
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              const MyHomePage(title: "Weather Dating App")));
+                          builder: (context) => Profile(
+                                isChecked: isChecked,
+                              )));
                   break;
               }
             })
