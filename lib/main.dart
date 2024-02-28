@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import './profile.dart';
 
 void main() {
@@ -40,6 +41,23 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   bool? isChecked = false;
+
+  setDarkMode() {
+    final preferencesFuture = SharedPreferences.getInstance();
+
+    return preferencesFuture
+        .then((preferences) => {preferences.setBool("isDarkMode", true)});
+  }
+
+  getDarkMode() {
+    final preferencesFuture = SharedPreferences.getInstance();
+
+    preferencesFuture.then((preferences) => {
+          print("we are using dark mode: " +
+              preferences.getBool("isDarkMode").toString())
+        });
+  }
+
   int _navIndex = 1;
   Container buildProfileCard(String profileType) {
     return Container(
@@ -55,6 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     List weatherOptions = ["Snowy", "Raining", "Cloudy"];
+    getDarkMode();
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
